@@ -21,8 +21,11 @@ app.get('/app', (req, res) => {
   
   //2. validate the values
 
+  let genreParams = ['action', 'puzzle', 'stategy', 'casual', 'aracde', 'card']
+
   if(genres !== undefined){
-    if(genres.toLowerCase() !== 'action' && genres.toLowerCase() !=='puzzle' && genres.toLowerCase() !== 'strategy' && genres.toLowerCase() !== 'casual' && genres.toLowerCase() !=='arcade' && genres.toLowerCase() !== 'card'){
+    // if(genres.toLowerCase() !== 'action' && genres.toLowerCase() !=='puzzle' && genres.toLowerCase() !== 'strategy' && genres.toLowerCase() !== 'casual' && genres.toLowerCase() !=='arcade' && genres.toLowerCase() !== 'card'){
+        if(!genreParams.includes(genres.toLowerCase())) {
       return res.status(400).send('can only filter by Action,Puzzle,Strategy,Casual,Arcade,or Card');
     }
     filtered_store = store.filter(app => {

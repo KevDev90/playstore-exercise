@@ -51,7 +51,7 @@ describe('playstore GET /app endpoint', () => {
       .expect(400, 'can only filter by Action,Puzzle,Strategy,Casual,Arcade,or Card');
   });
 
-  it('Valid sort', () => {
+  it('validates sort', () => {
     return request(app)
       .get('/app') // invoke the endpoint //assert that you get a 200  OK status
       .query({'sort':'app',})
@@ -60,14 +60,14 @@ describe('playstore GET /app endpoint', () => {
         let i = 0;
         let sorted = true;
         while(sorted && i < res.body.length - 1) {
-          sorted = sorted && res.body[i].App < res.body[i + 1].App;
+          sorted = res.body[i].App < res.body[i + 1].App;
           i++;
         }
         expect(sorted).to.be.true;
       });
   });
 
-  it('Valid sort', () => {
+  it('validates sort', () => {
     return request(app)
       .get('/app') // invoke the endpoint //assert that you get a 200  OK status
       .query({'sort':'rating',})
@@ -75,15 +75,16 @@ describe('playstore GET /app endpoint', () => {
         expect(res.body).to.be.an('array');
         let i = 0;
         let sorted = true;
-        while(sorted && i+1 < res.body.length - 1) {
-          sorted = sorted && res.body[i].Rating >= res.body[i + 1].Rating;
+        while(sorted && i < res.body.length - 1) {
+          console.log(i, res.body.length)  
+          sorted = res.body[i].Rating >= res.body[i + 1].Rating;
           i++;
         }
         expect(sorted).to.be.true;
       });
   });
 
-  it('filter by genre', () => {
+  it('filters by genre', () => {
     return request(app)
       .get('/app') // invoke the endpoint //assert that you get a 200  OK status
       .query({'genres':'Action',})
@@ -93,7 +94,7 @@ describe('playstore GET /app endpoint', () => {
       });
   });
   
-  it('sort by app name and filter by action ', () => {
+  it('sorts by app name and filter by action ', () => {
     return request(app)
       .get('/app') // invoke the endpoint //assert that you get a 200  OK status
       .query({'genres':'Action',
@@ -111,3 +112,4 @@ describe('playstore GET /app endpoint', () => {
 
       });
   });
+})
